@@ -1,3 +1,23 @@
+// IMPORT
+import { Helper } from './helper.js';
+import { Sprite } from './sprite.js';
+
+// PEMANGGILAN
+const helper = new Helper();
+const map = new Sprite({
+  src: '../assets/Tiled/map.png',
+  frameSize: helper.vector2D(480, 270),
+});
+const player = new Sprite({
+  src: '../assets/Tiled/char.png',
+  frameSize: helper.vector2D(16, 16),
+  hFrame: 4,
+  vFrame: 4,
+  frame: 0,
+});
+
+// console.log(map.image);
+
 class Main {
   constructor() {
     // CREATE WINDOW / CANVAS
@@ -17,7 +37,11 @@ class Main {
     this.mainLoop = this.mainLoop.bind(this);
   }
 
-  draw() {}
+  draw() {
+    this.ctx.drawImage(map.image, 0, 0);
+    // this.ctx.drawImage(player.image, 0, 0);
+    player.draw(this.ctx, 0, 0);
+  }
 
   update() {}
 
@@ -65,4 +89,4 @@ game.start();
 
 setInterval(() => {
   game.stop();
-}, 3000);
+}, 10000);
