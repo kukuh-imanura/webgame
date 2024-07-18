@@ -38,8 +38,7 @@ class Main {
   }
 
   draw() {
-    this.ctx.drawImage(map.image, 0, 0);
-    // this.ctx.drawImage(player.image, 0, 0);
+    map.draw(this.ctx, 0, 0);
     player.draw(this.ctx, 0, 0);
   }
 
