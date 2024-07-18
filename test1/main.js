@@ -11,8 +11,7 @@ class Main {
     // FPS
     this.fps = 1000 / 60;
     this.accTime = 0;
-    this.lasttime = 0;
-    this.lastFpsTime = 0;
+    this.lastTime = 0;
 
     // bind/ikat "this" agar tidak hilang saat loop
     this.mainLoop = this.mainLoop.bind(this);
@@ -27,8 +26,8 @@ class Main {
     if (this.isRun === false) return;
 
     // menghitung dt (delta time) loop utama
-    const dt = timestamp - this.lasttime;
-    this.lasttime = timestamp;
+    const dt = timestamp - this.lastTime;
+    this.lastTime = timestamp;
 
     // stabilisasi fps (fps looping)
     this.accTime += dt;
