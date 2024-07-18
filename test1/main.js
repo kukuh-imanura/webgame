@@ -3,8 +3,16 @@ class Main {
     // CREATE WINDOW / CANVAS
     this.canvas = document.getElementById('game-canvas');
     this.ctx = this.canvas.getContext('2d');
+
+    // config
     this.isRun = false;
     this.loop = null;
+
+    // FPS
+    this.fps = 1000 / 60;
+    this.accTime = 0;
+    this.lasttime = 0;
+    this.lastFpsTime = 0;
 
     // bind/ikat "this" agar tidak hilang saat loop
     this.mainLoop = this.mainLoop.bind(this);
@@ -14,12 +22,24 @@ class Main {
 
   update() {}
 
-  mainLoop() {
+  mainLoop(timestamp) {
     // cek apakah jalan
     if (this.isRun === false) return;
 
-    // main code
-    console.log('mainLoop');
+    // menghitung dt (delta time) loop utama
+    const dt = timestamp - this.lasttime;
+    this.lasttime = timestamp;
+
+    // stabilisasi fps (fps looping)
+    this.accTime += dt;
+    while (this.accTime >= this.fps) {
+      this.accTime -= this.fps;
+
+      // main code
+      this.draw();
+      this.update();
+      console.log('ping');
+    }
 
     // req frame untuk loop
     this.loop = requestAnimationFrame(this.mainLoop);
