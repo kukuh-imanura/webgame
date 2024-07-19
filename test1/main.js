@@ -1,26 +1,15 @@
-class Sprite {
-  constructor({ src, frameSize, hFrame, vFrame, frame }) {
-    this.src = src;
-    this.frameSize = frameSize;
-    this.hFrame = hFrame ?? 1;
-    this.vFrame = vFrame ?? 1;
-    this.frame = frame ?? 0;
-    this.image = null;
+class Helper {
+  constructor() {}
 
-    // LOAD
-    this.load();
-  }
+  static load(src) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = src;
 
-  // LOAD
-  load() {
-    this.image = new Image();
-    this.image.src = this.src;
+      img.onload = () => resolve(img);
+    });
   }
 }
-
-const map = new Sprite({
-  src: '../assets/Tiled/map.png',
-});
 
 class Main {
   constructor() {
@@ -39,10 +28,25 @@ class Main {
 
     // bind/ikat "this" agar tidak hilang saat loop
     this.mainLoop = this.mainLoop.bind(this);
+
+    // preload img
+    this.images = {};
+    this.preloadImages();
+  }
+
+  async preloadImages() {
+    this.images.map = await Helper.load('../assets/Tiled/map.png');
+    this.images.player = await Helper.load('../assets/Tiled/char.png');
   }
 
   draw() {
-    this.ctx.drawImage(map.image, 0, 0);
+    if (this.images.map) {
+      this.ctx.drawImage(this.images.map, 0, 0);
+    }
+
+    if (this.images.player) {
+      this.ctx.drawImage(this.images.player, 0, 0);
+    }
   }
 
   update() {}
