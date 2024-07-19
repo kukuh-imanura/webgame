@@ -35,10 +35,8 @@ class Main {
   }
 
   async preloadImages() {
-    this.images.map = await Helper.load(
-      'https://github.com/kukuh-imanura/webgame/blob/main/assets/Tiled/map.png'
-    );
-    // this.images.player = await Helper.load('../assets/Tiled/char.png');
+    this.images.map = await Helper.load('../assets/Tiled/map.png');
+    this.images.player = await Helper.load('../assets/Tiled/char.png');
   }
 
   draw() {
@@ -46,9 +44,9 @@ class Main {
       this.ctx.drawImage(this.images.map, 0, 0);
     }
 
-    // if (this.images.player) {
-    //   this.ctx.drawImage(this.images.player, 0, 0);
-    // }
+    if (this.images.player) {
+      this.ctx.drawImage(this.images.player, 0, 0);
+    }
   }
 
   update() {}
