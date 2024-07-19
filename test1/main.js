@@ -28,6 +28,15 @@ class Main {
 
     // bind/ikat "this" agar tidak hilang saat loop
     this.mainLoop = this.mainLoop.bind(this);
+
+    // preload img
+    this.images = {};
+    this.preloadImages();
+  }
+
+  async preloadImages() {
+    this.images.map = await Helper.load('../assets/Tiled/map.png');
+    this.images.player = await Helper.load('../assets/Tiled/char.png');
   }
 
   draw() {
