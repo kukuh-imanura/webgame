@@ -3,10 +3,31 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "char.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "Basic Charakter Spritesheet.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "Grass.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 4
+        },
+        "Water.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 4
+        },
+        "char.tmx": {
+            "scale": 9.203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 32.05432937181664,
+                "y": 32.054329371816635
+            }
+        },
         "map.tmx": {
             "scale": 0.75,
             "selectedLayer": 1,
@@ -23,9 +44,19 @@
     "map.tileWidth": 16,
     "map.width": 4,
     "openFiles": [
+        "map.tmx",
+        "Grass.tsx",
+        "Water.tsx",
+        "Basic Charakter Spritesheet.tsx",
+        "char.tmx"
     ],
     "project": "SproutLand.tiled-project",
     "recentFiles": [
+        "map.tmx",
+        "Grass.tsx",
+        "Water.tsx",
+        "Basic Charakter Spritesheet.tsx",
+        "char.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

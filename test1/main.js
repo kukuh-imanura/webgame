@@ -1,22 +1,28 @@
-// IMPORT
-import { Helper } from './helper.js';
-import { Sprite } from './sprite.js';
+class Sprite {
+  constructor({ src, frameSize, hFrame, vFrame, frame }) {
+    this.src = src;
+    this.frameSize = frameSize;
+    this.hFrame = hFrame ?? 1;
+    this.vFrame = vFrame ?? 1;
+    this.frame = frame ?? 0;
+    this.image = null;
 
-// PEMANGGILAN
-const helper = new Helper();
+    // LOAD
+    this.load();
+  }
+
+  // LOAD
+  load() {
+    this.image = new Image();
+    this.image.src = this.src;
+  }
+}
+
 const map = new Sprite({
   src: '../assets/Tiled/map.png',
-  frameSize: helper.vector2D(480, 270),
-});
-const player = new Sprite({
-  src: '../assets/Tiled/char.png',
-  frameSize: helper.vector2D(16, 16),
-  hFrame: 4,
-  vFrame: 4,
-  frame: 0,
 });
 
-// console.log(map.image);
+console.log(map.image);
 
 class Main {
   constructor() {
@@ -38,8 +44,7 @@ class Main {
   }
 
   draw() {
-    map.draw(this.ctx, 0, 0);
-    player.draw(this.ctx, 0, 0);
+    // this.ctx.drawImage(map.image, 0, 0);
   }
 
   update() {}
@@ -60,7 +65,6 @@ class Main {
       // main code
       this.draw();
       this.update();
-      console.log('ping');
     }
 
     // req frame untuk loop

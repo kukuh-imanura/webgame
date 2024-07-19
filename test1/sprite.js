@@ -1,3 +1,7 @@
+// import { Helper } from './helper';
+
+// const helper = new Helper();
+
 export class Sprite {
   constructor({ src, frameSize, hFrame, vFrame, frame }) {
     this.src = src;
@@ -22,57 +26,57 @@ export class Sprite {
     this.image = img;
   }
 
-  // BUILD FRAME MAP
-  buildFrameMap() {
-    let frameNum = 0;
-    for (let v = 0; v < this.vFrame; v++) {
-      for (let h = 0; h < this.hFrame; h++) {
-        this.frameMap.set(
-          frameNum,
-          helper.vector2D(h * this.frameSize.x, v * this.frameSize.y)
-        );
-        frameNum++;
-      }
-    }
-  }
+  // // BUILD FRAME MAP
+  // buildFrameMap() {
+  //   let frameNum = 0;
+  //   for (let v = 0; v < this.vFrame; v++) {
+  //     for (let h = 0; h < this.hFrame; h++) {
+  //       this.frameMap.set(
+  //         frameNum,
+  //         this.helper.vector2D(h * this.frameSize.x, v * this.frameSize.y)
+  //       );
+  //       frameNum++;
+  //     }
+  //   }
+  // }
 
-  // DRAW SPRITE
-  draw(ctx, x, y) {
-    // cek img sudah di load
-    if (!this.image) {
-      return;
-    }
+  // // DRAW SPRITE
+  // draw(ctx, x, y) {
+  //   // cek img sudah di load
+  //   if (!this.image) {
+  //     return;
+  //   }
 
-    // ambil frame yang akan di draw
-    const frame = this.frameMap.get(this.frame);
+  //   // ambil frame yang akan di draw
+  //   const frame = this.frameMap.get(this.frame);
 
-    let frameX = 0;
-    let frameY = 0;
+  //   let frameX = 0;
+  //   let frameY = 0;
 
-    // koordinat frame (cropped sprite)
-    if (frame) {
-      frameX = frame.x;
-      frameY = frame.y;
-    }
+  //   // koordinat frame (cropped sprite)
+  //   if (frame) {
+  //     frameX = frame.x;
+  //     frameY = frame.y;
+  //   }
 
-    // ukuran frame
-    const frameWidth = this.frameSize.x;
-    const frameHeight = this.frameSize.y;
+  //   // ukuran frame
+  //   const frameWidth = this.frameSize.x;
+  //   const frameHeight = this.frameSize.y;
 
-    ctx.drawImage(
-      this.image,
+  //   ctx.drawImage(
+  //     this.image,
 
-      frameX,
-      frameY,
+  //     frameX,
+  //     frameY,
 
-      frameWidth,
-      frameHeight,
+  //     frameWidth,
+  //     frameHeight,
 
-      x,
-      y,
+  //     x,
+  //     y,
 
-      frameWidth,
-      frameHeight
-    );
-  }
+  //     frameWidth,
+  //     frameHeight
+  //   );
+  // }
 }
