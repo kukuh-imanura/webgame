@@ -22,8 +22,6 @@ const map = new Sprite({
   src: '../assets/Tiled/map.png',
 });
 
-console.log(map.image);
-
 class Main {
   constructor() {
     // CREATE WINDOW / CANVAS
@@ -44,7 +42,7 @@ class Main {
   }
 
   draw() {
-    // this.ctx.drawImage(map.image, 0, 0);
+    this.ctx.drawImage(map.image, 0, 0);
   }
 
   update() {}
