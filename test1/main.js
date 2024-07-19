@@ -1,6 +1,15 @@
-import { Helper } from './helper.js';
+class Helper {
+  constructor() {}
 
-const map = Helper.load('../assets/Tiled/map.png');
+  static load(src) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => resolve(img);
+    });
+  }
+}
 
 class Main {
   constructor() {
@@ -22,7 +31,13 @@ class Main {
   }
 
   draw() {
-    if (map) this.ctx.drawImage(map, 0, 0);
+    if (this.images.map) {
+      this.ctx.drawImage(this.images.map, 0, 0);
+    }
+
+    if (this.images.player) {
+      this.ctx.drawImage(this.images.player, 0, 0);
+    }
   }
 
   update() {}
