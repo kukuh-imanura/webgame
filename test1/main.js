@@ -1,15 +1,6 @@
-class Helper {
-  constructor() {}
+import { Helper } from './helper.js';
 
-  static load(src) {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.src = src;
-
-      img.onload = () => resolve(img);
-    });
-  }
-}
+const map = Helper.load('../assets/Tiled/map.png');
 
 class Main {
   constructor() {
@@ -28,25 +19,10 @@ class Main {
 
     // bind/ikat "this" agar tidak hilang saat loop
     this.mainLoop = this.mainLoop.bind(this);
-
-    // preload img
-    this.images = {};
-    this.preloadImages();
-  }
-
-  async preloadImages() {
-    this.images.map = await Helper.load('../assets/Tiled/map.png');
-    this.images.player = await Helper.load('../assets/Tiled/char.png');
   }
 
   draw() {
-    if (this.images.map) {
-      this.ctx.drawImage(this.images.map, 0, 0);
-    }
-
-    if (this.images.player) {
-      this.ctx.drawImage(this.images.player, 0, 0);
-    }
+    if (map) this.ctx.drawImage(map, 0, 0);
   }
 
   update() {}
