@@ -1,8 +1,8 @@
 class Resource {
   constructor() {
     this.toLoad = {
-      map: './public/assets/img/map.png',
-      player: '../../public/assets/img/char.png',
+      map: './assets/img/map.png',
+      player: './assets/img/char.png',
     };
 
     this.images = {};
