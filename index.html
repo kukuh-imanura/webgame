@@ -17,34 +17,9 @@
 
 <body class="m-0 p-0 overflow-hidden">
 
-  <canvas id="game-canvas" width="480" height="270"></canvas>
+  <canvas id="game-canvas" width="480" height="270" class="w-full"></canvas>
 
   <script type="module" src="./test2/Main.js"></script>
-
-  <!-- CANVAS RESPONSIVE -->
-  <script>
-    const canvas = document.getElementById('game-canvas');
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-
-      if (screenWidth > screenHeight) {
-        // Lebar layar lebih besar dari tinggi layar
-        canvas.className = 'w-full';
-      } else {
-        // Tinggi layar lebih besar dari lebar layar
-        canvas.className = `h-[${screenHeight}px]`;
-      }
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-
-    // Atur ukuran canvas saat halaman dimuat
-    resizeCanvas();
-
-  </script>
 
 </body>
 

@@ -4,25 +4,60 @@ import { resource } from './Resource.js';
 import { Sprite } from './Sprite.js';
 
 // TEST
+class Player {
+  constructor() {
+    // PLAYER SPRITE
+    this.sprite = new Sprite({
+      src: resource.images.player,
+      frameSize: Helper.vector2D(16, 16),
+      hFrame: 4,
+      vFrame: 4,
+      frame: 0,
+    });
+
+    // PLAYER MOVEMENT
+    this.pos = Helper.vector2D(16 * 10, 16 * 10);
+    this.speed = 1;
+    this.keys = {
+      ArrowUp: false,
+      ArrowDown: false,
+      ArrowLeft: false,
+      ArrowRight: false,
+    };
+
+    // JALANKAN METHOD
+    this.movement();
+  }
+
+  // PLAYER MOV (EVENT)
+  movement() {
+    document.addEventListener('keydown', (e) => {
+      if (this.keys[e.key] !== undefined) {
+        this.keys[e.key] = true;
+      }
+    });
+
+    document.addEventListener('keyup', (e) => {
+      if (this.keys[e.key] !== undefined) {
+        this.keys[e.key] = false;
+      }
+    });
+  }
+}
 
 // DEKLARASI
-const map = new Sprite({
+const canvas = document.getElementById('game-canvas');
+
+const player = new Player();
+const mapSprite = new Sprite({
   src: resource.images.map,
-  frameSize: Helper.vector2D(480, 270),
-});
-const player = new Sprite({
-  src: resource.images.player,
-  frameSize: Helper.vector2D(16, 16),
-  hFrame: 4,
-  vFrame: 4,
-  frame: 0,
+  frameSize: Helper.vector2D(canvas.width, canvas.height),
 });
 
 class Main {
   constructor() {
     // CREATE WINDOW / CANVAS
-    this.canvas = document.getElementById('game-canvas');
-    this.ctx = this.canvas.getContext('2d');
+    this.ctx = canvas.getContext('2d');
 
     // config
     this.isRun = false;
@@ -38,11 +73,25 @@ class Main {
   }
 
   draw() {
-    map.draw(this.ctx, 0, 0);
-    player.draw(this.ctx, 0, 0);
+    mapSprite.draw(this.ctx, 0, 0);
+    player.sprite.draw(this.ctx, player.pos.x, player.pos.y);
   }
 
-  update() {}
+  update() {
+    // PLAYERV MOV
+    if (player.keys.ArrowDown) {
+      player.pos.y += player.speed;
+    }
+    if (player.keys.ArrowUp) {
+      player.pos.y -= player.speed;
+    }
+    if (player.keys.ArrowRight) {
+      player.pos.x += player.speed;
+    }
+    if (player.keys.ArrowLeft) {
+      player.pos.x -= player.speed;
+    }
+  }
 
   mainLoop(timestamp) {
     // cek apakah jalan
@@ -87,4 +136,5 @@ game.start();
 
 setInterval(() => {
   game.stop();
-}, 10000);
+  alert('STOP');
+}, 30000);
