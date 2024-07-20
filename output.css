@@ -566,6 +566,14 @@ video {
   height: 100vh;
 }
 
+.h-\[\] {
+  height: ;
+}
+
+.h-\[639px\] {
+  height: 639px;
+}
+
 .w-full {
   width: 100%;
 }
@@ -595,4 +603,14 @@ video {
 
 .p-0 {
   padding: 0px;
+}
+
+@media (min-width: 768px) {
+  .md\:h-screen {
+    height: 100vh;
+  }
+
+  .md\:w-auto {
+    width: auto;
+  }
 }

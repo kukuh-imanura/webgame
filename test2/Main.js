@@ -26,7 +26,7 @@ class Main {
 
     // config
     this.isRun = false;
-    this.loop = null;
+    this.animationFrame = null;
 
     // FPS
     this.fps = 1000 / 60;
@@ -38,8 +38,8 @@ class Main {
   }
 
   draw() {
-    map.draw(ctx, 0, 0);
-    player.draw(ctx, 0, 0);
+    map.draw(this.ctx, 0, 0);
+    player.draw(this.ctx, 0, 0);
   }
 
   update() {}
@@ -63,20 +63,20 @@ class Main {
     }
 
     // req frame untuk loop
-    this.loop = requestAnimationFrame(this.mainLoop);
+    this.animationFrame = requestAnimationFrame(this.mainLoop);
   }
 
   start() {
     if (this.isRun === false) {
       this.isRun = true;
-      this.loop = requestAnimationFrame(this.mainLoop);
+      this.animationFrame = requestAnimationFrame(this.mainLoop);
     }
   }
 
   stop() {
-    if (this.loop) {
+    if (this.animationFrame) {
       this.isRun = false;
-      this.loop = cancelAnimationFrame(this.loop);
+      this.animationFrame = cancelAnimationFrame(this.animationFrame);
     }
   }
 }
