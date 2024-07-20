@@ -35,8 +35,8 @@ class Main {
   }
 
   async preloadImages() {
-    this.images.map = await Helper.load('../assets/Tiled/map.png');
-    this.images.player = await Helper.load('../assets/Tiled/char.png');
+    this.images.map = await Helper.load('./map.png');
+    this.images.player = await Helper.load('./char.png');
   }
 
   draw() {
