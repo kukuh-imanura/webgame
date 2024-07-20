@@ -1,3 +1,31 @@
+class Resource {
+  constructor() {
+    this.toLoad = {
+      map: '../assets/img/map.png',
+      player: '../assets/img/char.png',
+    };
+
+    this.images = {};
+
+    Object.keys(this.toLoad).forEach((key) => {
+      const img = new Image();
+      img.src = this.toLoad[key];
+
+      this.images[key] = {
+        image: img,
+        isLoaded: false,
+      };
+
+      img.onload = () => {
+        this.images[key].isLoaded = true;
+      };
+    });
+  }
+}
+
+const resource = new Resource();
+const map = resource.images.map;
+
 class Main {
   constructor() {
     // CREATE WINDOW / CANVAS
@@ -17,7 +45,11 @@ class Main {
     this.mainLoop = this.mainLoop.bind(this);
   }
 
-  draw() {}
+  draw() {
+    if (map.isLoaded) {
+      this.ctx.drawImage(map.image, 0, 0);
+    }
+  }
 
   update() {}
 
