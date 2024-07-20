@@ -1,30 +1,22 @@
-class Resource {
-  constructor() {
-    this.toLoad = {
-      map: './assets/img/map.png',
-      player: './assets/img/char.png',
-    };
+// IMPORT
+import { Helper } from './Helper.js';
+import { resource } from './Resource.js';
+import { Sprite } from './Sprite.js';
 
-    this.images = {};
+// TEST
 
-    Object.keys(this.toLoad).forEach((key) => {
-      const img = new Image();
-      img.src = this.toLoad[key];
-
-      this.images[key] = {
-        image: img,
-        isLoaded: false,
-      };
-
-      img.onload = () => {
-        this.images[key].isLoaded = true;
-      };
-    });
-  }
-}
-
-const resource = new Resource();
-const map = resource.images.map;
+// DEKLARASI
+const map = new Sprite({
+  src: resource.images.map,
+  frameSize: Helper.vector2D(480, 270),
+});
+const player = new Sprite({
+  src: resource.images.player,
+  frameSize: Helper.vector2D(16, 16),
+  hFrame: 4,
+  vFrame: 4,
+  frame: 0,
+});
 
 class Main {
   constructor() {
@@ -46,9 +38,8 @@ class Main {
   }
 
   draw() {
-    if (map.isLoaded) {
-      this.ctx.drawImage(map.image, 0, 0);
-    }
+    map.draw(ctx, 0, 0);
+    player.draw(ctx, 0, 0);
   }
 
   update() {}
