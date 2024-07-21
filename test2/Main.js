@@ -2,60 +2,17 @@
 import { resource } from './Resource.js';
 import { Helper } from './Helper.js';
 import { Sprite } from './Sprite.js';
+import { Player } from './Player.js';
 
 // TEST
-class Player {
-  constructor() {
-    // PLAYER SPRITE
-    this.pos = Helper.vector2D(16 * 10, 16 * 10);
-    this.sprite = new Sprite({
-      src: resource.images.player,
-      frameSize: Helper.vector2D(16, 16),
-      hFrame: 4,
-      vFrame: 4,
-      frame: 0,
-    });
-
-    // PLAYER MOVEMENT
-    this.speed = 1;
-    this.keys = [];
-    this.activeKey = this.keys[0];
-
-    // JALANKAN METHOD
-    this.movement();
-  }
-
-  // PLAYER MOV (EVENT)
-  movement() {
-    document.addEventListener('keydown', (e) => {
-      // cek jika keys kosong
-      if (this.keys.indexOf(e.key) === -1) {
-        // tambahkan key ke awal
-        this.keys.unshift(e.key);
-        console.log(this.keys);
-      }
-    });
-
-    document.addEventListener('keyup', (e) => {
-      const index = this.keys.indexOf(e.key);
-
-      if (index === -1) return;
-
-      this.keys.splice(index, 1);
-      console.log(this.keys);
-    });
-  }
-}
-
-const player = new Player();
 
 // DEKLARASI
 const canvas = document.getElementById('game-canvas');
-
 const mapSprite = new Sprite({
   src: resource.images.map,
   frameSize: Helper.vector2D(canvas.width, canvas.height),
 });
+const player = new Player();
 
 class Main {
   constructor() {
@@ -81,18 +38,7 @@ class Main {
   }
 
   update() {
-    if (player.keys[0] === 'ArrowDown') {
-      player.pos.y += player.speed;
-    }
-    if (player.keys[0] === 'ArrowUp') {
-      player.pos.y -= player.speed;
-    }
-    if (player.keys[0] === 'ArrowRight') {
-      player.pos.x += player.speed;
-    }
-    if (player.keys[0] === 'ArrowLeft') {
-      player.pos.x -= player.speed;
-    }
+    player.movement();
   }
 
   mainLoop(timestamp) {
