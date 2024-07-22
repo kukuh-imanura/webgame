@@ -21,7 +21,7 @@ export class Player {
     this.speed = 1;
     this.keys = [];
     this.activeKey = this.keys[0];
-    this.movement();
+    this.eventCheck();
 
     // ANIMATION
     this.frameIndex = 0;
@@ -33,8 +33,8 @@ export class Player {
     };
   }
 
-  // PLAYER MOV (EVENT)
-  movement() {
+  // PLAYER (EVENT)
+  eventCheck() {
     document.addEventListener('keydown', (e) => {
       // cek jika keys kosong
       if (this.keys.indexOf(e.key) === -1) {
@@ -54,7 +54,20 @@ export class Player {
 
   // ANIMATION
   animation(dir) {
-    const direction = this.anim[dir];
+    let direction = null;
+
+    // cek animation key
+    if (
+      dir == 'ArrowDown' ||
+      dir == 'ArrowUp' ||
+      dir == 'ArrowLeft' ||
+      dir == 'ArrowRight'
+    ) {
+      direction = this.anim[dir];
+    } else {
+      direction = 'ArrowDown';
+    }
+
     this.frameIndex += 0.1;
     if (this.frameIndex >= direction.length) this.frameIndex = 0;
     this.sprite.frame = direction[Math.floor(this.frameIndex)];
