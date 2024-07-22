@@ -102,9 +102,9 @@ class Main {
     if (isMoving) {
       player.pos.x += dx * player.speed;
       player.pos.y += dy * player.speed;
-      if (player.keys.length > 0) {
-        player.animation(player.keys[0]);
-      }
+    }
+    if (player.keys.length > 0) {
+      player.animation(player.keys[0]);
     }
   }
 
