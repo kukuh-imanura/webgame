@@ -64,152 +64,47 @@ class Main {
   }
 
   update() {
-    // COLLITION
-    let isMoving = true;
-    const playerRect = player.rect();
     const margin = 1;
-
-    // console.log(playerRect);
-
-    // PLAYER MOVEMENT
-    const playerMov = {
-      down: player.keys.includes('ArrowDown'),
-      up: player.keys.includes('ArrowUp'),
-      left: player.keys.includes('ArrowLeft'),
-      right: player.keys.includes('ArrowRight'),
+    const playerRect = player.rect();
+    const directions = {
+      ArrowDown: { x: 0, y: 1, top: -margin },
+      ArrowUp: { x: 0, y: -1, bottom: margin },
+      ArrowLeft: { x: -1, y: 0, right: margin },
+      ArrowRight: { x: 1, y: 0, left: -margin },
     };
 
-    if (playerMov.down && playerMov.right) {
-      for (let i = 0; i < boundariesRect.length; i++) {
-        const obj = boundariesRect[i];
-        if (
-          Collition.collide(playerRect, {
-            ...obj,
-            top: obj.top - margin,
-            left: obj.left - margin,
-          })
-        ) {
-          isMoving = false;
-          break;
-        }
+    let dx = 0,
+      dy = 0;
+    let isMoving = true;
+
+    player.keys.forEach((key) => {
+      if (directions[key]) {
+        dx += directions[key].x;
+        dy += directions[key].y;
       }
-      if (isMoving) {
-        player.pos.y += player.speed;
-        player.pos.x += player.speed;
-      }
-    } else if (playerMov.down && playerMov.left) {
-      for (let i = 0; i < boundariesRect.length; i++) {
-        const obj = boundariesRect[i];
-        if (
-          Collition.collide(playerRect, {
-            ...obj,
-            top: obj.top - margin,
-            right: obj.right + margin,
-          })
-        ) {
-          isMoving = false;
-          break;
-        }
-      }
-      if (isMoving) {
-        player.pos.y += player.speed;
-        player.pos.x -= player.speed;
-      }
-    } else if (playerMov.up && playerMov.right) {
-      for (let i = 0; i < boundariesRect.length; i++) {
-        const obj = boundariesRect[i];
-        if (
-          Collition.collide(playerRect, {
-            ...obj,
-            bottom: obj.bottom + margin,
-            left: obj.left - margin,
-          })
-        ) {
-          isMoving = false;
-          break;
-        }
-      }
-      if (isMoving) {
-        player.pos.y -= player.speed;
-        player.pos.x += player.speed;
-      }
-    } else if (playerMov.up && playerMov.left) {
-      for (let i = 0; i < boundariesRect.length; i++) {
-        const obj = boundariesRect[i];
-        if (
-          Collition.collide(playerRect, {
-            ...obj,
-            bottom: obj.bottom + margin,
-            right: obj.right + margin,
-          })
-        ) {
-          isMoving = false;
-          break;
-        }
-      }
-      if (isMoving) {
-        player.pos.y -= player.speed;
-        player.pos.x -= player.speed;
-      }
-    } else {
-      // Menangani gerakan tunggal berdasarkan tombol terakhir yang ditekan
-      if (player.keys[0] === 'ArrowDown') {
-        // collition check
-        for (let i = 0; i < boundariesRect.length; i++) {
-          const obj = boundariesRect[i];
-          if (
-            Collition.collide(playerRect, { ...obj, top: obj.top - margin })
-          ) {
-            isMoving = false;
-            break;
-          }
-        }
-        if (isMoving) player.pos.y += player.speed;
-      }
-      if (player.keys[0] === 'ArrowUp') {
-        for (let i = 0; i < boundariesRect.length; i++) {
-          const obj = boundariesRect[i];
-          if (
-            Collition.collide(playerRect, {
-              ...obj,
-              bottom: obj.bottom + margin,
-            })
-          ) {
-            isMoving = false;
-            break;
-          }
-        }
-        if (isMoving) player.pos.y -= player.speed;
-      }
-      if (player.keys[0] === 'ArrowLeft') {
-        for (let i = 0; i < boundariesRect.length; i++) {
-          const obj = boundariesRect[i];
-          if (
-            Collition.collide(playerRect, { ...obj, right: obj.right + margin })
-          ) {
-            isMoving = false;
-            break;
-          }
-        }
-        if (isMoving) player.pos.x -= player.speed;
-      }
-      if (player.keys[0] === 'ArrowRight') {
-        for (let i = 0; i < boundariesRect.length; i++) {
-          const obj = boundariesRect[i];
-          if (
-            Collition.collide(playerRect, { ...obj, left: obj.left - margin })
-          ) {
-            isMoving = false;
-            break;
-          }
-        }
-        if (isMoving) player.pos.x += player.speed;
+    });
+
+    for (let i = 0; i < boundariesRect.length; i++) {
+      const obj = boundariesRect[i];
+      let collisionObj = { ...obj };
+
+      if (dx > 0) collisionObj.left = obj.left - margin;
+      if (dx < 0) collisionObj.right = obj.right + margin;
+      if (dy > 0) collisionObj.top = obj.top - margin;
+      if (dy < 0) collisionObj.bottom = obj.bottom + margin;
+
+      if (Collition.collide(playerRect, collisionObj)) {
+        isMoving = false;
+        break;
       }
     }
 
-    // PLAYER MOV ANIMATION
-    if (player.keys.length > 0) {
-      player.animation(player.keys[0]);
+    if (isMoving) {
+      player.pos.x += dx * player.speed;
+      player.pos.y += dy * player.speed;
+      if (player.keys.length > 0) {
+        player.animation(player.keys[0]);
+      }
     }
   }
 
