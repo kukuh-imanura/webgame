@@ -1,4 +1,4 @@
-import { Helper } from './Helper.js';
+import { Vector2D } from './Helper.js';
 
 export class Sprite {
   constructor({ src, frameSize, hFrame, vFrame, frame }) {
@@ -20,7 +20,7 @@ export class Sprite {
       for (let h = 0; h < this.hFrame; h++) {
         this.frameMap.set(
           frameNum,
-          Helper.vector2D(h * this.frameSize.x, v * this.frameSize.y)
+          new Vector2D(h * this.frameSize.x, v * this.frameSize.y)
         );
         frameNum++;
       }

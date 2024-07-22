@@ -1,23 +1,27 @@
-import { Helper } from './Helper.js';
+import { Vector2D } from './Helper.js';
 import { resource } from './Resource.js';
 import { Sprite } from './Sprite.js';
 
 export class Player {
   constructor() {
     // PLAYER SPRITE
-    this.pos = Helper.vector2D(16 * 10, 16 * 10);
+    this.pos = new Vector2D(16 * 10, 16 * 10);
     this.sprite = new Sprite({
       src: resource.images.player,
-      frameSize: Helper.vector2D(16, 16),
+      frameSize: new Vector2D(16, 16),
       hFrame: 4,
       vFrame: 4,
       frame: 0,
     });
 
+    this.width = this.sprite.src.image.width / this.sprite.vFrame;
+    this.height = this.sprite.src.image.height / this.sprite.hFrame;
+
     // PLAYER MOVEMENT
     this.speed = 1;
     this.keys = [];
     this.activeKey = this.keys[0];
+    this.movement();
 
     // ANIMATION
     this.frameIndex = 0;
@@ -46,48 +50,6 @@ export class Player {
 
       this.keys.splice(index, 1);
     });
-
-    // PLAYER MOVEMENT
-    const playerDown = this.keys.includes('ArrowDown');
-    const playerUp = this.keys.includes('ArrowUp');
-    const playerLeft = this.keys.includes('ArrowLeft');
-    const playerRight = this.keys.includes('ArrowRight');
-
-    if (playerDown && playerRight) {
-      this.pos.y += this.speed;
-      this.pos.x += this.speed;
-      this.animation(this.keys[0]);
-    } else if (playerDown && playerLeft) {
-      this.pos.y += this.speed;
-      this.pos.x -= this.speed;
-      this.animation(this.keys[0]);
-    } else if (playerUp && playerRight) {
-      this.pos.y -= this.speed;
-      this.pos.x += this.speed;
-      this.animation(this.keys[0]);
-    } else if (playerUp && playerLeft) {
-      this.pos.y -= this.speed;
-      this.pos.x -= this.speed;
-      this.animation(this.keys[0]);
-    } else {
-      // Menangani gerakan tunggal berdasarkan tombol terakhir yang ditekan
-      if (this.keys[0] === 'ArrowDown') {
-        this.pos.y += this.speed;
-        this.animation(this.keys[0]);
-      }
-      if (this.keys[0] === 'ArrowUp') {
-        this.pos.y -= this.speed;
-        this.animation(this.keys[0]);
-      }
-      if (this.keys[0] === 'ArrowLeft') {
-        this.pos.x -= this.speed;
-        this.animation(this.keys[0]);
-      }
-      if (this.keys[0] === 'ArrowRight') {
-        this.pos.x += this.speed;
-        this.animation(this.keys[0]);
-      }
-    }
   }
 
   // ANIMATION
@@ -96,5 +58,14 @@ export class Player {
     this.frameIndex += 0.1;
     if (this.frameIndex >= direction.length) this.frameIndex = 0;
     this.sprite.frame = direction[Math.floor(this.frameIndex)];
+  }
+
+  rect() {
+    return {
+      left: this.pos.x,
+      right: this.pos.x + this.width,
+      top: this.pos.y,
+      bottom: this.pos.y + this.height,
+    };
   }
 }

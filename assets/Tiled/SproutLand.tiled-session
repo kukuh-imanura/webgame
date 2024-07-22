@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "char.tmx",
+    "activeFile": "map.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -36,12 +36,16 @@
                 "y": 31.402376910016983
             }
         },
+        "env.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
         "map.tmx": {
-            "scale": 3,
-            "selectedLayer": 2,
+            "scale": 2,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 149.83333333333331,
-                "y": 159
+                "x": 153.25,
+                "y": 260.5
             }
         }
     },
@@ -58,17 +62,19 @@
         "Grass.tsx",
         "Water.tsx",
         "Basic Charakter Spritesheet.tsx",
-        "char.tmx"
+        "char.tmx",
+        "env.tsx"
     ],
     "project": "SproutLand.tiled-project",
     "recentFiles": [
-        "Bitmask references 2.tsx",
-        "Bitmask references 1.tsx",
-        "map.tmx",
-        "Grass.tsx",
-        "Water.tsx",
+        "env.tsx",
+        "char.tmx",
         "Basic Charakter Spritesheet.tsx",
-        "char.tmx"
+        "Water.tsx",
+        "Grass.tsx",
+        "map.tmx",
+        "Bitmask references 2.tsx",
+        "Bitmask references 1.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
