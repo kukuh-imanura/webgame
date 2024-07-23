@@ -57,14 +57,13 @@ class Main {
     mapSprite.draw(ctx, 0, 0);
     player.sprite.draw(ctx, player.pos.x, player.pos.y);
 
+    // BOUNDARY
     boundaries.forEach((obj) => {
       obj.drawRect();
     });
   }
 
   update() {
-    // console.log(player.touch);
-
     const margin = 1;
     const playerRect = player.rect();
     const directions = {
