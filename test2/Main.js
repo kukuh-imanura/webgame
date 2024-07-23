@@ -27,7 +27,6 @@ boundaryPos.forEach((pos) => {
     })
   );
 });
-
 const boundariesRect = [];
 boundaries.forEach((obj) => {
   boundariesRect.push(obj.rect());
@@ -64,19 +63,30 @@ class Main {
   }
 
   update() {
+    // console.log(player.touch);
+
     const margin = 1;
     const playerRect = player.rect();
     const directions = {
-      ArrowDown: { x: 0, y: 1, top: -margin },
-      ArrowUp: { x: 0, y: -1, bottom: margin },
-      ArrowLeft: { x: -1, y: 0, right: margin },
-      ArrowRight: { x: 1, y: 0, left: -margin },
+      ArrowDown: { x: 0, y: 1 },
+      ArrowUp: { x: 0, y: -1 },
+      ArrowLeft: { x: -1, y: 0 },
+      ArrowRight: { x: 1, y: 0 },
+
+      // MOUSE DIR || TOUCH DIR
+      topLeft: { x: -1, y: -1 },
+      left: { x: -1, y: 0 },
+      bottomLeft: { x: -1, y: 1 },
+      topRight: { x: 1, y: -1 },
+      right: { x: 1, y: 0 },
+      bottomRight: { x: 1, y: +1 },
     };
 
     let dx = 0,
       dy = 0;
     let isMoving = true;
 
+    // CEK PRESSED KEY
     player.keys.forEach((key) => {
       if (directions[key]) {
         dx += directions[key].x;
@@ -84,6 +94,23 @@ class Main {
       }
     });
 
+    // CEK MOUSE POS
+    player.mouse.forEach((pos) => {
+      if (directions[pos]) {
+        dx += directions[pos].x;
+        dy += directions[pos].y;
+      }
+    });
+
+    // CEK TOUCH POS
+    player.touch.forEach((pos) => {
+      if (directions[pos]) {
+        dx += directions[pos].x;
+        dy += directions[pos].y;
+      }
+    });
+
+    // BOUNDARY COLLITION
     for (let i = 0; i < boundariesRect.length; i++) {
       const obj = boundariesRect[i];
       let collisionObj = { ...obj };
@@ -99,12 +126,17 @@ class Main {
       }
     }
 
+    // MOVE PLAYER
     if (isMoving) {
       player.pos.x += dx * player.speed;
       player.pos.y += dy * player.speed;
     }
-    if (player.keys.length > 0) {
-      player.animation(player.keys[0]);
+    if (
+      player.keys.length > 0 ||
+      player.mouse.length > 0 ||
+      player.touch.length > 0
+    ) {
+      player.animation(player.keys[0] || player.mouse[0] || player.touch[0]);
     }
   }
 

@@ -20,8 +20,10 @@ export class Player {
     // PLAYER MOVEMENT
     this.speed = 1;
     this.keys = [];
+    this.mouse = [];
+    this.touch = [];
     this.activeKey = this.keys[0];
-    this.eventCheck();
+    this.eventListener();
 
     // ANIMATION
     this.frameIndex = 0;
@@ -30,11 +32,18 @@ export class Player {
       ArrowUp: [4, 6, 4, 7],
       ArrowLeft: [8, 10, 8, 11],
       ArrowRight: [12, 14, 12, 15],
+      topLeft: [8, 10, 8, 11],
+      left: [8, 10, 8, 11],
+      bottomLeft: [8, 10, 8, 11],
+      topRight: [12, 14, 12, 15],
+      right: [12, 14, 12, 15],
+      bottomRight: [12, 14, 12, 15],
     };
   }
 
   // PLAYER (EVENT)
-  eventCheck() {
+  eventListener() {
+    // KEYBOARD
     document.addEventListener('keydown', (e) => {
       // cek jika keys kosong
       if (this.keys.indexOf(e.key) === -1) {
@@ -50,6 +59,74 @@ export class Player {
 
       this.keys.splice(index, 1);
     });
+
+    // MOUSE
+    document.addEventListener('mousedown', (e) => {
+      let pos = null;
+
+      if (e.x >= window.innerWidth / 2) {
+        if (e.y <= window.innerHeight * (1 / 3)) {
+          pos = 'topRight';
+          if (this.mouse.indexOf(pos) === -1) this.mouse.unshift(pos);
+        } else if (e.y <= window.innerHeight * (2 / 3)) {
+          pos = 'right';
+          if (this.mouse.indexOf(pos) === -1) this.mouse.unshift(pos);
+        } else if (e.y <= window.innerHeight) {
+          pos = 'bottomRight';
+          if (this.mouse.indexOf(pos) === -1) this.mouse.unshift(pos);
+        }
+      } else {
+        if (e.y <= window.innerHeight * (1 / 3)) {
+          pos = 'topLeft';
+          if (this.mouse.indexOf(pos) === -1) this.mouse.unshift(pos);
+        } else if (e.y <= window.innerHeight * (2 / 3)) {
+          pos = 'left';
+          if (this.mouse.indexOf(pos) === -1) this.mouse.unshift(pos);
+        } else if (e.y <= window.innerHeight) {
+          pos = 'bottomLeft';
+          if (this.mouse.indexOf(pos) === -1) this.mouse.unshift(pos);
+        }
+      }
+    });
+
+    document.addEventListener('mouseup', (e) => {
+      this.mouse.shift();
+    });
+
+    // TOUCH
+    document.addEventListener('touchstart', (e) => {
+      let pos = null;
+      const x = e.touches[0].clientX;
+      const y = e.touches[0].clientY;
+
+      if (x >= window.innerWidth / 2) {
+        if (y <= window.innerHeight * (1 / 3)) {
+          pos = 'topRight';
+          if (this.touch.indexOf(pos) === -1) this.touch.unshift(pos);
+        } else if (y <= window.innerHeight * (2 / 3)) {
+          pos = 'right';
+          if (this.touch.indexOf(pos) === -1) this.touch.unshift(pos);
+        } else if (y <= window.innerHeight) {
+          pos = 'bottomRight';
+          if (this.touch.indexOf(pos) === -1) this.touch.unshift(pos);
+        }
+      } else {
+        if (y <= window.innerHeight * (1 / 3)) {
+          pos = 'topLeft';
+          if (this.touch.indexOf(pos) === -1) this.touch.unshift(pos);
+        } else if (y <= window.innerHeight * (2 / 3)) {
+          pos = 'left';
+          if (this.touch.indexOf(pos) === -1) this.touch.unshift(pos);
+        } else if (y <= window.innerHeight) {
+          pos = 'bottomLeft';
+          if (this.touch.indexOf(pos) === -1) this.touch.unshift(pos);
+        }
+      }
+    });
+
+    document.addEventListener('touchend', (e) => {
+      this.touch.shift();
+    });
   }
 
   // ANIMATION
@@ -61,7 +138,13 @@ export class Player {
       dir == 'ArrowDown' ||
       dir == 'ArrowUp' ||
       dir == 'ArrowLeft' ||
-      dir == 'ArrowRight'
+      dir == 'ArrowRight' ||
+      dir == 'topLeft' ||
+      dir == 'left' ||
+      dir == 'bottomLeft' ||
+      dir == 'topRight' ||
+      dir == 'right' ||
+      dir == 'bottomRight'
     ) {
       direction = this.anim[dir];
     } else {
