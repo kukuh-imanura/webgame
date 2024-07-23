@@ -89,7 +89,7 @@ export class Player {
       }
     });
 
-    document.addEventListener('mouseup', (e) => {
+    document.addEventListener('mouseup', () => {
       this.mouse.shift();
     });
 
@@ -124,7 +124,7 @@ export class Player {
       }
     });
 
-    document.addEventListener('touchend', (e) => {
+    document.addEventListener('touchend', () => {
       this.touch.shift();
     });
   }
