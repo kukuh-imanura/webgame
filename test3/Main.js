@@ -1,22 +1,24 @@
 // IMPORT
+import { Draw } from './Helper/Draw.js';
 import { canvasHeight, canvasWidth, ctx } from './Settings.js';
-import { Sprite } from './Sprite.js';
-import { Vector2D } from './Helper/Vector2D.js';
+// import { Sprite } from './Sprite.js';
+// import { Vector2D } from './Helper/Vector2D.js';
+
+// DEKLARASI
+// const map = new Sprite({
+//   src: '../assets/img/map.png',
+// });
+
+// const player = new Sprite({
+//   src: '../assets/img/char.png',
+//   frameSize: new Vector2D(16, 16),
+//   hFrame: 4,
+//   vFrame: 4,
+//   frame: 0,
+// });
 
 // TEST
-const map = new Sprite({
-  src: '../assets/img/map.png',
-});
-
-const player = new Sprite({
-  src: '../assets/img/char.png',
-  frameSize: new Vector2D(16, 16),
-  hFrame: 4,
-  vFrame: 4,
-  frame: 0,
-});
-
-// console.log(canvasWidth, canvasHeight);
+const draw = new Draw();
 
 class Main {
   constructor() {
@@ -37,8 +39,10 @@ class Main {
     // BERSIHKAN CANVAS
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    map.draw(-100, -100);
-    player.draw(0, 0);
+    draw.fillRect({ x: 16, y: 16, width: 16, height: 16, color: 'red' });
+
+    // map.draw(-100, -100);
+    // player.draw(0, 0);
   }
 
   update() {}

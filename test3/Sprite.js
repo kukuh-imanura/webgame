@@ -62,4 +62,29 @@ export class Sprite {
       ctx.drawImage(this.img, x, y);
     }
   }
+
+  rect(x, y) {
+    if (!this.frameSize) return;
+
+    const bottom = y + this.frameSize.y;
+    const right = x + this.frameSize.x;
+
+    const leftTop = new Vector2D(x, y);
+    const leftBottom = new Vector2D(x, bottom);
+    const rightTop = new Vector2D(right, y);
+    const rightBottom = new Vector2D(right, bottom);
+    const center = new Vector2D(x + (right - x) / 2, y + (bottom - y) / 2);
+
+    return {
+      top: y,
+      left: x,
+      bottom: bottom,
+      right: right,
+      leftTop: leftTop,
+      leftBottom: leftBottom,
+      rightTop: rightTop,
+      rightBottom: rightBottom,
+      center: center,
+    };
+  }
 }
