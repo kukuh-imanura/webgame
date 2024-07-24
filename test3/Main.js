@@ -1,5 +1,22 @@
 // IMPORT
 import { canvasHeight, canvasWidth, ctx } from './Settings.js';
+import { Sprite } from './Sprite.js';
+import { Vector2D } from './Helper/Vector2D.js';
+
+// TEST
+const map = new Sprite({
+  src: '../assets/img/map.png',
+});
+
+const player = new Sprite({
+  src: '../assets/img/char.png',
+  frameSize: new Vector2D(16, 16),
+  hFrame: 4,
+  vFrame: 4,
+  frame: 0,
+});
+
+// console.log(canvasWidth, canvasHeight);
 
 class Main {
   constructor() {
@@ -19,6 +36,9 @@ class Main {
   draw() {
     // BERSIHKAN CANVAS
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    map.draw(-100, -100);
+    player.draw(0, 0);
   }
 
   update() {}
