@@ -10,3 +10,8 @@ canvas.height = screenHeight / 4;
 
 export const canvasWidth = canvas.width;
 export const canvasHeight = canvas.height;
+
+export const canvasTop = 0;
+export const canvasLeft = 0;
+export const canvasBottom = canvasTop + canvasHeight;
+export const canvasRight = canvasLeft + canvasWidth;

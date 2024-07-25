@@ -1,7 +1,7 @@
-import { Vector2D } from './Helper/Vector2D.js';
+import Vector2D from './Helper/Vector2D.js';
 import { ctx } from './Settings.js';
 
-export class Sprite {
+export default class Sprite {
   constructor({ src, frameSize, hFrame, vFrame, frame }) {
     this.src = src;
     this.frameSize = frameSize;
