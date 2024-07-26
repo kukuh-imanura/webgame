@@ -48,25 +48,27 @@ export default class Player {
   }
 
   movement(dt, offset) {
+    const playerSpeed = Math.ceil(this.speed * dt);
+
     // DOWN
     if (this.keys[0] === 'ArrowDown') {
       if (this.rect.bottom < cameraRect.bottom) {
         this.isMov = true;
       } else {
-        offset.y -= Math.ceil(this.speed * dt);
+        offset.y -= playerSpeed;
         this.isMov = false;
       }
 
       if (this.isMov) {
-        this.pos.y += Math.ceil(this.speed * dt);
+        this.pos.y += playerSpeed;
 
         if (this.keys[1] === 'ArrowRight') {
           this.isMov = this.rect.right < cameraRect.right;
-          if (this.isMov) this.pos.x += Math.ceil(this.speed * dt);
+          if (this.isMov) this.pos.x += playerSpeed;
         }
         if (this.keys[1] === 'ArrowLeft') {
           this.isMov = this.rect.left > cameraRect.left;
-          if (this.isMov) this.pos.x -= Math.ceil(this.speed * dt);
+          if (this.isMov) this.pos.x -= playerSpeed;
         }
       }
     }
@@ -76,20 +78,20 @@ export default class Player {
       if (this.rect.top > cameraRect.top) {
         this.isMov = true;
       } else {
-        offset.y += Math.ceil(this.speed * dt);
+        offset.y += playerSpeed;
         this.isMov = false;
       }
 
       if (this.isMov) {
-        this.pos.y -= Math.ceil(this.speed * dt);
+        this.pos.y -= playerSpeed;
 
         if (this.keys[1] === 'ArrowRight') {
           this.isMov = this.rect.right < cameraRect.right;
-          if (this.isMov) this.pos.x += Math.ceil(this.speed * dt);
+          if (this.isMov) this.pos.x += playerSpeed;
         }
         if (this.keys[1] === 'ArrowLeft') {
           this.isMov = this.rect.left > cameraRect.left;
-          if (this.isMov) this.pos.x -= Math.ceil(this.speed * dt);
+          if (this.isMov) this.pos.x -= playerSpeed;
         }
       }
     }
@@ -99,19 +101,19 @@ export default class Player {
       if (this.rect.right <= cameraRect.right) {
         this.isMov = true;
       } else {
-        offset.x -= Math.ceil(this.speed * dt);
+        offset.x -= playerSpeed;
         this.isMov = false;
       }
 
       if (this.isMov) {
-        this.pos.x += Math.ceil(this.speed * dt);
+        this.pos.x += playerSpeed;
 
         if (this.keys[1] === 'ArrowDown') {
           this.isMov = this.rect.bottom < cameraRect.bottom;
-          if (this.isMov) this.pos.y += Math.ceil(this.speed * dt);
+          if (this.isMov) this.pos.y += playerSpeed;
         } else if (this.keys[1] === 'ArrowUp') {
           this.isMov = this.rect.top > cameraRect.top;
-          if (this.isMov) this.pos.y -= Math.ceil(this.speed * dt);
+          if (this.isMov) this.pos.y -= playerSpeed;
         }
       }
     }
@@ -121,19 +123,19 @@ export default class Player {
       if (this.rect.left > cameraRect.left) {
         this.isMov = true;
       } else {
-        offset.x += Math.ceil(this.speed * dt);
+        offset.x += playerSpeed;
         this.isMov = false;
       }
 
       if (this.isMov) {
-        this.pos.x -= Math.ceil(this.speed * dt);
+        this.pos.x -= playerSpeed;
 
         if (this.keys[1] === 'ArrowDown') {
           this.isMov = this.rect.bottom < cameraRect.bottom;
-          if (this.isMov) this.pos.y += Math.ceil(this.speed * dt);
+          if (this.isMov) this.pos.y += playerSpeed;
         } else if (this.keys[1] === 'ArrowUp') {
           this.isMov = this.rect.top > cameraRect.top;
-          if (this.isMov) this.pos.y -= Math.ceil(this.speed * dt);
+          if (this.isMov) this.pos.y -= playerSpeed;
         }
       }
     }
