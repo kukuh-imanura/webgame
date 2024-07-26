@@ -34,8 +34,9 @@ class Main {
     player.sprite.draw(player.pos.x, player.pos.y);
   }
 
-  update() {
-    player.movement();
+  update(dt) {
+    player.movement(dt);
+    player.animation(player.keys[0]);
     player.getRect(player.pos.x, player.pos.y);
   }
 
@@ -50,11 +51,10 @@ class Main {
     // stabilisasi fps (fps looping)
     this.accTime += dt;
     while (this.accTime >= this.fps) {
-      this.accTime -= this.fps;
-
       // main code
       this.draw();
-      this.update();
+      this.update(this.fps / 1000);
+      this.accTime -= this.fps;
     }
 
     // req frame untuk loop

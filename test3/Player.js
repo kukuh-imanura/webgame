@@ -24,14 +24,9 @@ export default class Player {
     this.input();
 
     // MOVEMENT
-    this.speed = 1;
+    this.speed = 60;
+    this.frameSpeed = 0.15;
     this.isMov = true;
-    // this.directions = {
-    //   ArrowDown: { x: 0, y: 1 },
-    //   ArrowUp: { x: 0, y: -1 },
-    //   ArrowLeft: { x: -1, y: 0 },
-    //   ArrowRight: { x: 1, y: 0 },
-    // };
 
     // ANIMATION
     this.frameIndex = 0;
@@ -57,22 +52,21 @@ export default class Player {
     });
   }
 
-  movement() {
+  movement(dt) {
     // DOWN
     if (this.keys[0] === 'ArrowDown') {
       this.isMov = this.rect.bottom < canvasBottom;
 
       if (this.isMov) {
-        this.pos.y += this.speed;
-        this.animation('ArrowDown');
+        this.pos.y += Math.ceil(this.speed * dt);
 
         if (this.keys[1] === 'ArrowRight') {
           this.isMov = this.rect.right < canvasRight;
-          if (this.isMov) this.pos.x += this.speed;
+          if (this.isMov) this.pos.x += Math.ceil(this.speed * dt);
         }
         if (this.keys[1] === 'ArrowLeft') {
           this.isMov = this.rect.left > canvasLeft;
-          if (this.isMov) this.pos.x -= this.speed;
+          if (this.isMov) this.pos.x -= Math.ceil(this.speed * dt);
         }
       }
     }
@@ -82,16 +76,15 @@ export default class Player {
       this.isMov = this.rect.top > canvasTop;
 
       if (this.isMov) {
-        this.pos.y -= this.speed;
-        this.animation('ArrowUp');
+        this.pos.y -= Math.ceil(this.speed * dt);
 
         if (this.keys[1] === 'ArrowRight') {
           this.isMov = this.rect.right < canvasRight;
-          if (this.isMov) this.pos.x += this.speed;
+          if (this.isMov) this.pos.x += Math.ceil(this.speed * dt);
         }
         if (this.keys[1] === 'ArrowLeft') {
           this.isMov = this.rect.left > canvasLeft;
-          if (this.isMov) this.pos.x -= this.speed;
+          if (this.isMov) this.pos.x -= Math.ceil(this.speed * dt);
         }
       }
     }
@@ -101,15 +94,14 @@ export default class Player {
       this.isMov = this.rect.right <= canvasRight;
 
       if (this.isMov) {
-        this.pos.x += this.speed;
-        this.animation('ArrowRight');
+        this.pos.x += Math.ceil(this.speed * dt);
 
         if (this.keys[1] === 'ArrowDown') {
           this.isMov = this.rect.bottom < canvasBottom;
-          if (this.isMov) this.pos.y += this.speed;
+          if (this.isMov) this.pos.y += Math.ceil(this.speed * dt);
         } else if (this.keys[1] === 'ArrowUp') {
           this.isMov = this.rect.top > canvasTop;
-          if (this.isMov) this.pos.y -= this.speed;
+          if (this.isMov) this.pos.y -= Math.ceil(this.speed * dt);
         }
       }
     }
@@ -119,31 +111,17 @@ export default class Player {
       this.isMov = this.rect.left > canvasLeft;
 
       if (this.isMov) {
-        this.pos.x -= this.speed;
-        this.animation('ArrowLeft');
+        this.pos.x -= Math.ceil(this.speed * dt);
 
         if (this.keys[1] === 'ArrowDown') {
           this.isMov = this.rect.bottom < canvasBottom;
-          if (this.isMov) this.pos.y += this.speed;
+          if (this.isMov) this.pos.y += Math.ceil(this.speed * dt);
         } else if (this.keys[1] === 'ArrowUp') {
           this.isMov = this.rect.top > canvasTop;
-          if (this.isMov) this.pos.y -= this.speed;
+          if (this.isMov) this.pos.y -= Math.ceil(this.speed * dt);
         }
       }
     }
-
-    // let dx = 0;
-    // let dy = 0;
-
-    // this.keys.forEach((key) => {
-    //   dx += this.directions[key].x;
-    //   dy += this.directions[key].y;
-    // });
-
-    // this.pos.x += dx * this.speed;
-    // this.pos.y += dy * this.speed;
-
-    // if (this.keys[0]) this.animation(this.keys[0]);
   }
 
   getRect(x, y) {
@@ -151,9 +129,12 @@ export default class Player {
   }
 
   animation(dir) {
+    // cek directin
+    if (!dir) return;
+
     let direction = this.anim[dir];
 
-    this.frameIndex += 0.1;
+    this.frameIndex += this.frameSpeed;
 
     if (this.frameIndex >= direction.length) this.frameIndex = 0;
 
