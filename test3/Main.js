@@ -1,9 +1,11 @@
 // IMPORT
+import Vector2D from './Helper/Vector2D.js';
 import Player from './Player.js';
 import { canvasHeight, canvasWidth, ctx } from './Settings.js';
 import Sprite from './Sprite.js';
 
 // DEKLARASI
+const offset = new Vector2D(0, 0);
 const map = new Sprite({
   src: '../assets/img/map.png',
 });
@@ -30,12 +32,12 @@ class Main {
     // BERSIHKAN CANVAS
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    map.draw(-100, -100);
+    map.draw(-100 + offset.x, -100 + offset.y);
     player.sprite.draw(player.pos.x, player.pos.y);
   }
 
   update(dt) {
-    player.movement(dt);
+    player.movement(dt, offset);
     player.animation(player.keys[0]);
     player.getRect(player.pos.x, player.pos.y);
   }

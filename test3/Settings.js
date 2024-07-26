@@ -11,7 +11,17 @@ canvas.height = screenHeight / 4;
 export const canvasWidth = canvas.width;
 export const canvasHeight = canvas.height;
 
-export const canvasTop = 0;
-export const canvasLeft = 0;
-export const canvasBottom = canvasTop + canvasHeight;
-export const canvasRight = canvasLeft + canvasWidth;
+export const canvasRect = {
+  top: 0,
+  left: 0,
+  bottom: canvasHeight,
+  right: canvasWidth,
+};
+
+const cameraMargin = 32;
+export const cameraRect = {
+  top: canvasRect.top + cameraMargin,
+  bottom: canvasRect.bottom - cameraMargin,
+  left: canvasRect.left + cameraMargin,
+  right: canvasRect.right - cameraMargin,
+};

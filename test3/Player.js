@@ -1,10 +1,5 @@
 import Vector2D from './Helper/Vector2D.js';
-import {
-  canvasBottom,
-  canvasLeft,
-  canvasRight,
-  canvasTop,
-} from './Settings.js';
+import { cameraRect } from './Settings.js';
 import Sprite from './Sprite.js';
 
 export default class Player {
@@ -52,20 +47,25 @@ export default class Player {
     });
   }
 
-  movement(dt) {
+  movement(dt, offset) {
     // DOWN
     if (this.keys[0] === 'ArrowDown') {
-      this.isMov = this.rect.bottom < canvasBottom;
+      if (this.rect.bottom < cameraRect.bottom) {
+        this.isMov = true;
+      } else {
+        offset.y -= Math.ceil(this.speed * dt);
+        this.isMov = false;
+      }
 
       if (this.isMov) {
         this.pos.y += Math.ceil(this.speed * dt);
 
         if (this.keys[1] === 'ArrowRight') {
-          this.isMov = this.rect.right < canvasRight;
+          this.isMov = this.rect.right < cameraRect.right;
           if (this.isMov) this.pos.x += Math.ceil(this.speed * dt);
         }
         if (this.keys[1] === 'ArrowLeft') {
-          this.isMov = this.rect.left > canvasLeft;
+          this.isMov = this.rect.left > cameraRect.left;
           if (this.isMov) this.pos.x -= Math.ceil(this.speed * dt);
         }
       }
@@ -73,17 +73,22 @@ export default class Player {
 
     // UP
     if (this.keys[0] === 'ArrowUp') {
-      this.isMov = this.rect.top > canvasTop;
+      if (this.rect.top > cameraRect.top) {
+        this.isMov = true;
+      } else {
+        offset.y += Math.ceil(this.speed * dt);
+        this.isMov = false;
+      }
 
       if (this.isMov) {
         this.pos.y -= Math.ceil(this.speed * dt);
 
         if (this.keys[1] === 'ArrowRight') {
-          this.isMov = this.rect.right < canvasRight;
+          this.isMov = this.rect.right < cameraRect.right;
           if (this.isMov) this.pos.x += Math.ceil(this.speed * dt);
         }
         if (this.keys[1] === 'ArrowLeft') {
-          this.isMov = this.rect.left > canvasLeft;
+          this.isMov = this.rect.left > cameraRect.left;
           if (this.isMov) this.pos.x -= Math.ceil(this.speed * dt);
         }
       }
@@ -91,16 +96,21 @@ export default class Player {
 
     // RIGHT
     if (this.keys[0] === 'ArrowRight') {
-      this.isMov = this.rect.right <= canvasRight;
+      if (this.rect.right <= cameraRect.right) {
+        this.isMov = true;
+      } else {
+        offset.x -= Math.ceil(this.speed * dt);
+        this.isMov = false;
+      }
 
       if (this.isMov) {
         this.pos.x += Math.ceil(this.speed * dt);
 
         if (this.keys[1] === 'ArrowDown') {
-          this.isMov = this.rect.bottom < canvasBottom;
+          this.isMov = this.rect.bottom < cameraRect.bottom;
           if (this.isMov) this.pos.y += Math.ceil(this.speed * dt);
         } else if (this.keys[1] === 'ArrowUp') {
-          this.isMov = this.rect.top > canvasTop;
+          this.isMov = this.rect.top > cameraRect.top;
           if (this.isMov) this.pos.y -= Math.ceil(this.speed * dt);
         }
       }
@@ -108,16 +118,21 @@ export default class Player {
 
     // LEFT
     if (this.keys[0] === 'ArrowLeft') {
-      this.isMov = this.rect.left > canvasLeft;
+      if (this.rect.left > cameraRect.left) {
+        this.isMov = true;
+      } else {
+        offset.x += Math.ceil(this.speed * dt);
+        this.isMov = false;
+      }
 
       if (this.isMov) {
         this.pos.x -= Math.ceil(this.speed * dt);
 
         if (this.keys[1] === 'ArrowDown') {
-          this.isMov = this.rect.bottom < canvasBottom;
+          this.isMov = this.rect.bottom < cameraRect.bottom;
           if (this.isMov) this.pos.y += Math.ceil(this.speed * dt);
         } else if (this.keys[1] === 'ArrowUp') {
-          this.isMov = this.rect.top > canvasTop;
+          this.isMov = this.rect.top > cameraRect.top;
           if (this.isMov) this.pos.y -= Math.ceil(this.speed * dt);
         }
       }
