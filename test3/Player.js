@@ -13,7 +13,7 @@ export default class Player {
   constructor() {
     this.pos = new Vector2D(32, 32);
     this.sprite = new Sprite({
-      src: '../assets/img/char.png',
+      src: './assets/img/char.png',
       frameSize: new Vector2D(16, 16),
       hFrame: 4,
       vFrame: 4,
