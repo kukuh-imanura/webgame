@@ -40,7 +40,6 @@ export default class Player {
 
     // COLLITION
     this.rect = null;
-    // this.isCollide = false; // cek collition dengan boundary
   }
 
   input() {
