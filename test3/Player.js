@@ -1,6 +1,13 @@
+import Collition from './Helper/Collition.js';
+import Draw from './Helper/Draw.js';
 import Vector2D from './Helper/Vector2D.js';
+import Boundaries from './Map/boundaries.js';
 import { cameraRect } from './Settings.js';
 import Sprite from './Sprite.js';
+
+// DEKLARASI
+const boundaries = new Boundaries();
+const boundaryPos = boundaries.boundaryPos;
 
 export default class Player {
   constructor() {
@@ -12,7 +19,6 @@ export default class Player {
       vFrame: 4,
       frame: 0,
     });
-    this.rect = null;
 
     // INPUT
     this.keys = [];
@@ -31,6 +37,10 @@ export default class Player {
       ArrowLeft: [8, 10, 8, 11],
       ArrowRight: [12, 14, 12, 15],
     };
+
+    // COLLITION
+    this.rect = null;
+    // this.isCollide = false; // cek collition dengan boundary
   }
 
   input() {
@@ -48,18 +58,24 @@ export default class Player {
   }
 
   movement(dt, offset) {
+    this.getRect(this.pos.x, this.pos.y);
     const playerSpeed = Math.ceil(this.speed * dt);
+
+    // BOUNDARIES
 
     // DOWN
     if (this.keys[0] === 'ArrowDown') {
-      if (this.rect.bottom < cameraRect.bottom) {
-        this.isMov = true;
-      } else {
+      this.isCollide = boundaryPos.some((pos) => {
+        const rect = Draw.getRect(pos.x + offset.x, pos.y + offset.y, 16, 16);
+        return Collition.collide(this.rect, { ...rect, top: rect.top - 5 });
+      });
+
+      if (this.isCollide) {
+        this.isMov = false;
+      } else if (this.rect.bottom >= cameraRect.bottom) {
         offset.y -= playerSpeed;
         this.isMov = false;
-      }
-
-      if (this.isMov) {
+      } else {
         this.pos.y += playerSpeed;
 
         if (this.keys[1] === 'ArrowRight') {
@@ -75,37 +91,53 @@ export default class Player {
 
     // UP
     if (this.keys[0] === 'ArrowUp') {
-      if (this.rect.top > cameraRect.top) {
-        this.isMov = true;
-      } else {
+      // Berhenti ketika kena boundary
+      this.isCollide = boundaryPos.some((pos) => {
+        const rect = Draw.getRect(pos.x + offset.x, pos.y + offset.y, 16, 16);
+        return Collition.collide(this.rect, {
+          ...rect,
+          bottom: rect.bottom + 5,
+        });
+      });
+
+      if (this.isCollide) {
+        this.isMov = false;
+      } else if (this.rect.top <= cameraRect.top) {
+        // Geser map ketika kena border kamera
         offset.y += playerSpeed;
         this.isMov = false;
-      }
-
-      if (this.isMov) {
+      } else {
+        // Geser pemain
         this.pos.y -= playerSpeed;
 
-        if (this.keys[1] === 'ArrowRight') {
-          this.isMov = this.rect.right < cameraRect.right;
-          if (this.isMov) this.pos.x += playerSpeed;
+        if (
+          this.keys[1] === 'ArrowRight' &&
+          this.rect.right < cameraRect.right
+        ) {
+          this.pos.x += playerSpeed;
         }
-        if (this.keys[1] === 'ArrowLeft') {
-          this.isMov = this.rect.left > cameraRect.left;
-          if (this.isMov) this.pos.x -= playerSpeed;
+        if (this.keys[1] === 'ArrowLeft' && this.rect.left > cameraRect.left) {
+          this.pos.x -= playerSpeed;
         }
       }
     }
 
     // RIGHT
     if (this.keys[0] === 'ArrowRight') {
-      if (this.rect.right <= cameraRect.right) {
-        this.isMov = true;
-      } else {
+      this.isCollide = boundaryPos.some((pos) => {
+        const rect = Draw.getRect(pos.x + offset.x, pos.y + offset.y, 16, 16);
+        return Collition.collide(this.rect, {
+          ...rect,
+          left: rect.left - 5,
+        });
+      });
+
+      if (this.isCollide) {
+        this.isMov = false;
+      } else if (this.rect.right >= cameraRect.right) {
         offset.x -= playerSpeed;
         this.isMov = false;
-      }
-
-      if (this.isMov) {
+      } else {
         this.pos.x += playerSpeed;
 
         if (this.keys[1] === 'ArrowDown') {
@@ -120,14 +152,20 @@ export default class Player {
 
     // LEFT
     if (this.keys[0] === 'ArrowLeft') {
-      if (this.rect.left > cameraRect.left) {
-        this.isMov = true;
-      } else {
+      this.isCollide = boundaryPos.some((pos) => {
+        const rect = Draw.getRect(pos.x + offset.x, pos.y + offset.y, 16, 16);
+        return Collition.collide(this.rect, {
+          ...rect,
+          right: rect.right + 5,
+        });
+      });
+
+      if (this.isCollide) {
+        this.isMov = false;
+      } else if (this.rect.left <= cameraRect.left) {
         offset.x += playerSpeed;
         this.isMov = false;
-      }
-
-      if (this.isMov) {
+      } else {
         this.pos.x -= playerSpeed;
 
         if (this.keys[1] === 'ArrowDown') {

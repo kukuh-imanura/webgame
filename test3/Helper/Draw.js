@@ -6,8 +6,6 @@ export default class Draw {
   static fillRect(x, y, width, height, color = 'red') {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, width, height);
-
-    return this.getRect(x, y, width, height);
   }
 
   static line(coor) {

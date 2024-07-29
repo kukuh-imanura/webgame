@@ -133,7 +133,7 @@ export default class Boundaries {
 
   // DRAW
   draw(x, y) {
-    return this.boundaryPos.forEach((pos) => {
+    this.boundaryPos.forEach((pos) => {
       Draw.fillRect(pos.x + x, pos.y + y, 16, 16);
     });
   }

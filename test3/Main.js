@@ -1,18 +1,15 @@
 // IMPORT
 import Vector2D from './Helper/Vector2D.js';
-import Boundaries from './Map/boundaries.js';
 import Player from './Player.js';
 import { canvasHeight, canvasWidth, ctx } from './Settings.js';
 import Map from './Map/Map.js';
 
 // DEKLARASI
-const offset = new Vector2D(0, 0);
+const offset = new Vector2D(-100, -100);
 const map = new Map();
-const boundaries = new Boundaries();
 const player = new Player();
 
 // TEST
-// const boundariesPos = boundaries.boundaryPos;
 
 class Main {
   constructor() {
@@ -32,17 +29,14 @@ class Main {
   draw() {
     // BERSIHKAN CANVAS
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    const mapPos = new Vector2D(map.pos.x + offset.x, map.pos.y + offset.y);
 
-    map.sprite.draw(mapPos.x, mapPos.y);
-    boundaries.draw(mapPos.x, mapPos.y);
+    map.sprite.draw(offset.x, offset.y);
     player.sprite.draw(player.pos.x, player.pos.y);
   }
 
   update(dt) {
     player.movement(dt, offset);
     player.animation(player.keys[0]);
-    player.getRect(player.pos.x, player.pos.y);
   }
 
   mainLoop(timestamp) {
