@@ -1,7 +1,7 @@
 import Collition from './Helper/Collition.js';
 import Draw from './Helper/Draw.js';
 import Vector2D from './Helper/Vector2D.js';
-import Boundaries from './Map/boundaries.js';
+import Boundaries from './Map/Boundaries.js';
 import { cameraRect } from './Settings.js';
 import Sprite from './Sprite.js';
 
