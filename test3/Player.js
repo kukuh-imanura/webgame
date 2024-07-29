@@ -146,8 +146,13 @@ export default class Player {
   }
 
   animation(dir) {
-    // cek directin
-    if (!dir) return;
+    if (
+      dir != 'ArrowDown' &&
+      dir != 'ArrowUp' &&
+      dir != 'ArrowLeft' &&
+      dir != 'ArrowRight'
+    )
+      return;
 
     let direction = this.anim[dir];
 

@@ -32,8 +32,8 @@
             "scale": 9.203125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 45.5823429541596,
-                "y": 31.402376910016983
+                "x": 31.94567062818336,
+                "y": 32
             }
         },
         "env.tsx": {
@@ -42,10 +42,10 @@
         },
         "map.tmx": {
             "scale": 2,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 153.25,
-                "y": 260.5
+                "x": 759.25,
+                "y": 299.5
             }
         }
     },

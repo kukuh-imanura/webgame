@@ -4,7 +4,7 @@ export default class Draw {
   constructor() {}
 
   static fillRect(x, y, width, height, color = 'red') {
-    if (color) ctx.fillStyle = color;
+    ctx.fillStyle = color;
     ctx.fillRect(x, y, width, height);
 
     return this.getRect(x, y, width, height);
