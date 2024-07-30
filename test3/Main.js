@@ -35,6 +35,7 @@ class Main {
   }
 
   update(dt) {
+    // console.log(player.isMov);
     player.movement(dt, offset);
     player.animation(player.keys[0]);
   }
