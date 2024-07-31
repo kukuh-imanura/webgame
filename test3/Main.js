@@ -3,11 +3,18 @@ import Vector2D from './Helper/Vector2D.js';
 import Player from './Player.js';
 import { canvasHeight, canvasWidth, ctx } from './Settings.js';
 import Map from './Map/Map.js';
+import GroundObj, { Bush } from './Map/Object.js';
 
 // DEKLARASI
 const offset = new Vector2D(-100, -100);
 const map = new Map();
 const player = new Player();
+const bush = new Bush({ pos: new Vector2D(150, 150), frame: 20 });
+
+// SPRITE GROUP
+const randBush = Bush.random(10);
+const mush = GroundObj.random(10, 0, 1);
+const cameraGroup = [player, bush, ...randBush, ...mush];
 
 // TEST
 
@@ -31,7 +38,22 @@ class Main {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     map.sprite.draw(offset.x, offset.y);
-    player.sprite.draw(player.pos.x, player.pos.y);
+
+    // SORTING
+    cameraGroup.sort((a, b) => {
+      const aY = a === player ? a.pos.y : a.pos.y + offset.y;
+      const bY = b === player ? b.pos.y : b.pos.y + offset.y;
+      return aY - bY;
+    });
+
+    // DRAW GROUP
+    cameraGroup.forEach((obj) => {
+      if (obj == player) {
+        obj.sprite.draw(obj.pos.x, obj.pos.y);
+      } else {
+        obj.sprite.draw(obj.pos.x + offset.x, obj.pos.y + offset.y);
+      }
+    });
   }
 
   update(dt) {
