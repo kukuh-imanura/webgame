@@ -1,9 +1,17 @@
 // IMPORT
 import Vector2D from './Helper/Vector2D.js';
 import Player from './Player.js';
-import { canvasHeight, canvasWidth, ctx } from './Settings.js';
+import {
+  canvasHeight,
+  canvasRect,
+  canvasWidth,
+  ctx,
+  screenHeight,
+  screenWidth,
+} from './Settings.js';
 import Map from './Map/Map.js';
 import GroundObj, { Bush } from './Map/Object.js';
+import { Button } from './Helper/Button.js';
 
 // DEKLARASI
 const offset = new Vector2D(-100, -100);
@@ -17,6 +25,7 @@ const mush = GroundObj.random(10, 0, 1);
 const cameraGroup = [player, bush, ...randBush, ...mush];
 
 // TEST
+const btn = new Button(canvasWidth / 2, canvasRect.bottom - 50, 4);
 
 class Main {
   constructor() {
@@ -54,12 +63,32 @@ class Main {
         obj.sprite.draw(obj.pos.x + offset.x, obj.pos.y + offset.y);
       }
     });
+
+    // CONTROLLER
+    if (screenHeight > screenWidth) btn.draw();
   }
 
   update(dt) {
-    // console.log(player.isMov);
+    // console.log(Math.round(btn.dx));
+    const cont = {
+      x: Math.round(btn.dx),
+      y: Math.round(btn.dy),
+    };
+
+    let dir = null;
+    cont.x > 0
+      ? (dir = 'ArrowRight')
+      : cont.x < 0
+      ? (dir = 'ArrowLeft')
+      : cont.y > 0
+      ? (dir = 'ArrowDown')
+      : cont.y < 0
+      ? (dir = 'ArrowUp')
+      : (dir = player.keys[0]);
+
     player.movement(dt, offset);
-    player.animation(player.keys[0]);
+    player.controllerMov(dt, offset, cont);
+    player.animation(dir);
   }
 
   mainLoop(timestamp) {

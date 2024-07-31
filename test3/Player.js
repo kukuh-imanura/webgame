@@ -2,7 +2,7 @@ import Collition from './Helper/Collition.js';
 import Draw from './Helper/Draw.js';
 import Vector2D from './Helper/Vector2D.js';
 import Boundaries from './Map/Boundaries.js';
-import { cameraRect } from './Settings.js';
+import { cameraRect, canvasWidth, canvasHeight } from './Settings.js';
 import Sprite from './Sprite.js';
 
 // DEKLARASI
@@ -11,7 +11,6 @@ const boundaryPos = boundaries.boundaryPos;
 
 export default class Player {
   constructor() {
-    this.pos = new Vector2D(32, 32);
     this.sprite = new Sprite({
       src: 'assets/img/char.png',
       frameSize: new Vector2D(16, 16),
@@ -19,6 +18,10 @@ export default class Player {
       vFrame: 4,
       frame: 0,
     });
+    this.pos = new Vector2D(
+      Math.round(canvasWidth / 2) - this.sprite.frameSize.x / 2,
+      Math.round(canvasHeight / 2) - this.sprite.frameSize.y / 2
+    );
 
     // INPUT
     this.keys = [];
@@ -29,7 +32,6 @@ export default class Player {
     this.frameSpeed = 0.15;
 
     // ANIMATION
-    this.isMov = false;
     this.frameIndex = 0;
     this.anim = {
       ArrowDown: [0, 2, 0, 3],
@@ -171,25 +173,95 @@ export default class Player {
     }
   }
 
+  controllerMov(dt, offset, controller) {
+    const playerSpeed = Math.ceil(this.speed * dt);
+
+    // KANAN
+    if (controller.x > 0) {
+      // CEK COLLIDE
+      this.isCollide = boundaryPos.some((pos) => {
+        const rect = Draw.getRect(pos.x + offset.x, pos.y + offset.y, 16, 16);
+        return Collition.collide(this.rect, {
+          ...rect,
+          left: rect.left - 5,
+        });
+      });
+
+      if (this.isCollide) return;
+      if (this.rect.right >= cameraRect.right) {
+        offset.x -= playerSpeed;
+      } else {
+        this.pos.x += controller.x * playerSpeed;
+      }
+    }
+
+    // KIRI
+    if (controller.x < 0) {
+      // CEK COLLIDE
+      this.isCollide = boundaryPos.some((pos) => {
+        const rect = Draw.getRect(pos.x + offset.x, pos.y + offset.y, 16, 16);
+        return Collition.collide(this.rect, {
+          ...rect,
+          right: rect.right + 5,
+        });
+      });
+
+      if (this.isCollide) return;
+      if (this.rect.left <= cameraRect.left) {
+        offset.x += playerSpeed;
+      } else {
+        this.pos.x += controller.x * playerSpeed;
+      }
+    }
+
+    // ATAS
+    if (controller.y < 0) {
+      // CEK COLLIDE
+      this.isCollide = boundaryPos.some((pos) => {
+        const rect = Draw.getRect(pos.x + offset.x, pos.y + offset.y, 16, 16);
+        return Collition.collide(this.rect, {
+          ...rect,
+          bottom: rect.bottom + 5,
+        });
+      });
+
+      if (this.isCollide) return;
+      if (this.rect.top <= cameraRect.top) {
+        offset.y += playerSpeed;
+      } else {
+        this.pos.y += controller.y * playerSpeed;
+      }
+    }
+
+    // BAWAH
+    if (controller.y > 0) {
+      // CEK COLLIDE
+      this.isCollide = boundaryPos.some((pos) => {
+        const rect = Draw.getRect(pos.x + offset.x, pos.y + offset.y, 16, 16);
+        return Collition.collide(this.rect, {
+          ...rect,
+          top: rect.top - 5,
+        });
+      });
+
+      if (this.isCollide) return;
+      if (this.rect.bottom >= cameraRect.bottom) {
+        offset.y -= playerSpeed;
+      } else {
+        this.pos.y += controller.y * playerSpeed;
+      }
+    }
+  }
+
   getRect(x, y) {
     this.rect = this.sprite.rect(x, y);
   }
 
   animation(dir) {
-    if (
-      dir == 'ArrowDown' ||
-      dir == 'ArrowUp' ||
-      dir == 'ArrowLeft' ||
-      dir == 'ArrowRight'
-    ) {
-      // MOVING
-      let anim = this.anim[dir];
-      this.frameIndex += this.frameSpeed;
-      if (this.frameIndex >= anim.length) this.frameIndex = 0;
-      this.sprite.frame = anim[Math.floor(this.frameIndex)];
-    } else {
+    if (!dir) {
       // GET FRAME
       let frame = 'Idle_ArrowDown';
+
       // if (this.sprite.frame <= 3) {
       //   frame = 'Idle_ArrowDown';
       // } else if (this.sprite.frame <= 7) {
@@ -203,6 +275,12 @@ export default class Player {
       // IDLE
       let anim = this.anim[frame];
       this.frameIndex += this.frameSpeed / 3;
+      if (this.frameIndex >= anim.length) this.frameIndex = 0;
+      this.sprite.frame = anim[Math.floor(this.frameIndex)];
+    } else {
+      // MOVING
+      let anim = this.anim[dir];
+      this.frameIndex += this.frameSpeed;
       if (this.frameIndex >= anim.length) this.frameIndex = 0;
       this.sprite.frame = anim[Math.floor(this.frameIndex)];
     }
