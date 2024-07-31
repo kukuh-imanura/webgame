@@ -25,7 +25,7 @@ const mush = GroundObj.random(10, 0, 1);
 const cameraGroup = [player, bush, ...randBush, ...mush];
 
 // TEST
-const btn = new Button(canvasWidth / 2, canvasRect.bottom - 20, 4);
+const btn = new Button(canvasWidth / 2, canvasRect.bottom - 50, 4);
 
 class Main {
   constructor() {
