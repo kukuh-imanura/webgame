@@ -131,7 +131,7 @@ class Main {
 const game = new Main();
 game.start();
 
-setInterval(() => {
-  game.stop();
-  alert('STOP');
-}, -1);
+//setInterval(() => {
+//  game.stop();
+//  alert('STOP');
+//}, 30000);
