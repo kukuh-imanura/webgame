@@ -134,4 +134,4 @@ game.start();
 setInterval(() => {
   game.stop();
   alert('STOP');
-}, 30000);
+}, -1);
